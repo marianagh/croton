@@ -53,7 +53,7 @@ class RiskReleaseController extends Controller
         $riskrelease->update($request->all());
         return ['updated' => true];
     }
-    }
+    
 
     /**
      * Remove the specified resource from storage.

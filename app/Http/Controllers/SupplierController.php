@@ -54,7 +54,7 @@ class SupplierController extends Controller
         $supplier->update($request->all());
         return ['updated' => true];
     }
-    }
+    
 
     /**
      * Remove the specified resource from storage.
