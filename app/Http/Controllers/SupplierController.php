@@ -4,6 +4,8 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 
+use App\Supplier;
+
 class SupplierController extends Controller
 {
     /**
@@ -13,17 +15,7 @@ class SupplierController extends Controller
      */
     public function index()
     {
-        //
-    }
-
-    /**
-     * Show the form for creating a new resource.
-     *
-     * @return \Illuminate\Http\Response
-     */
-    public function create()
-    {
-        //
+        return Supplier::all();
     }
 
     /**
@@ -34,7 +26,8 @@ class SupplierController extends Controller
      */
     public function store(Request $request)
     {
-        //
+        Supplier::create($request->all());
+        return ['created' => true];
     }
 
     /**
@@ -45,18 +38,7 @@ class SupplierController extends Controller
      */
     public function show($id)
     {
-        //
-    }
-
-    /**
-     * Show the form for editing the specified resource.
-     *
-     * @param  int  $id
-     * @return \Illuminate\Http\Response
-     */
-    public function edit($id)
-    {
-        //
+        return Concession::findOrFail($id);
     }
 
     /**
@@ -68,7 +50,10 @@ class SupplierController extends Controller
      */
     public function update(Request $request, $id)
     {
-        //
+        $supplier = Supplier::findOrFail($id);
+        $supplier->update($request->all());
+        return ['updated' => true];
+    }
     }
 
     /**
@@ -79,6 +64,7 @@ class SupplierController extends Controller
      */
     public function destroy($id)
     {
-        //
+        User::destroy($id);
+        return ['deleted' => true];
     }
 }

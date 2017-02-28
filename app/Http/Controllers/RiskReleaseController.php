@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
+use App\RiskRelease;
 
 class RiskReleaseController extends Controller
 {
@@ -13,17 +14,7 @@ class RiskReleaseController extends Controller
      */
     public function index()
     {
-        //
-    }
-
-    /**
-     * Show the form for creating a new resource.
-     *
-     * @return \Illuminate\Http\Response
-     */
-    public function create()
-    {
-        //
+        return RiskRelease::all();
     }
 
     /**
@@ -34,7 +25,8 @@ class RiskReleaseController extends Controller
      */
     public function store(Request $request)
     {
-        //
+        RiskRelease::create($request->all());
+        return ['created' => true];
     }
 
     /**
@@ -45,18 +37,7 @@ class RiskReleaseController extends Controller
      */
     public function show($id)
     {
-        //
-    }
-
-    /**
-     * Show the form for editing the specified resource.
-     *
-     * @param  int  $id
-     * @return \Illuminate\Http\Response
-     */
-    public function edit($id)
-    {
-        //
+        return RiskRelease::findOrFail($id);
     }
 
     /**
@@ -68,7 +49,10 @@ class RiskReleaseController extends Controller
      */
     public function update(Request $request, $id)
     {
-        //
+        $riskrelease = RiskRelease::findOrFail($id);
+        $riskrelease->update($request->all());
+        return ['updated' => true];
+    }
     }
 
     /**
@@ -79,6 +63,7 @@ class RiskReleaseController extends Controller
      */
     public function destroy($id)
     {
-        //
+        RiskRelease::destroy($id);
+        return ['deleted' => true];
     }
 }

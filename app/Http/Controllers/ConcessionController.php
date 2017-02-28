@@ -2,6 +2,8 @@
 
 namespace App\Http\Controllers;
 
+use App\Concession;
+
 use Illuminate\Http\Request;
 
 class ConcessionController extends Controller
@@ -13,17 +15,7 @@ class ConcessionController extends Controller
      */
     public function index()
     {
-        //
-    }
-
-    /**
-     * Show the form for creating a new resource.
-     *
-     * @return \Illuminate\Http\Response
-     */
-    public function create()
-    {
-        //
+        return Concession::all();
     }
 
     /**
@@ -34,7 +26,8 @@ class ConcessionController extends Controller
      */
     public function store(Request $request)
     {
-        //
+        Concession::create($request->all());
+        return ['created' => true];
     }
 
     /**
@@ -45,19 +38,21 @@ class ConcessionController extends Controller
      */
     public function show($id)
     {
-        //
+        return Concession::findOrFail($id);
     }
 
     /**
-     * Show the form for editing the specified resource.
+     * Display the specified resource with the partnumber_id.
      *
-     * @param  int  $id
+     * @param  int  $partnumber_id
      * @return \Illuminate\Http\Response
      */
-    public function edit($id)
+    public function getByPartNumber($id)
     {
-        //
+        
+    return Concession::where('partnumber_id','=', $id)->get();
     }
+
 
     /**
      * Update the specified resource in storage.
@@ -68,7 +63,9 @@ class ConcessionController extends Controller
      */
     public function update(Request $request, $id)
     {
-        //
+        $concession = Concession::findOrFail($id);
+        $concession->update($request->all());
+        return ['updated' => true];
     }
 
     /**
@@ -79,6 +76,9 @@ class ConcessionController extends Controller
      */
     public function destroy($id)
     {
-        //
+        Concession::destroy($id);
+        return ['deleted' => true];
     }
+
+
 }

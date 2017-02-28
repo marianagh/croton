@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
+use App\PartNumber;
 
 class PartNumberController extends Controller
 {
@@ -13,17 +14,7 @@ class PartNumberController extends Controller
      */
     public function index()
     {
-        //
-    }
-
-    /**
-     * Show the form for creating a new resource.
-     *
-     * @return \Illuminate\Http\Response
-     */
-    public function create()
-    {
-        //
+        PartNumber::all();
     }
 
     /**
@@ -34,7 +25,8 @@ class PartNumberController extends Controller
      */
     public function store(Request $request)
     {
-        //
+        PartNumber::create($request->all());
+        return ['created' => true];
     }
 
     /**
@@ -45,19 +37,9 @@ class PartNumberController extends Controller
      */
     public function show($id)
     {
-        //
+         return PartNumber::findOrFail($id);
     }
 
-    /**
-     * Show the form for editing the specified resource.
-     *
-     * @param  int  $id
-     * @return \Illuminate\Http\Response
-     */
-    public function edit($id)
-    {
-        //
-    }
 
     /**
      * Update the specified resource in storage.
@@ -68,7 +50,10 @@ class PartNumberController extends Controller
      */
     public function update(Request $request, $id)
     {
-        //
+        $partnumber = PartNumber::findOrFail($id);
+        $partnumber->update($request->all());
+        return ['updated' => true];
+    }
     }
 
     /**
@@ -79,6 +64,17 @@ class PartNumberController extends Controller
      */
     public function destroy($id)
     {
-        //
+        PartNumber::destroy($id);
+        return ['deleted' => true];
+    }
+    /**
+     * Display the partnumber with the name.
+     *
+     * @param  string  $name
+     * @return \Illuminate\Http\Response
+     */
+    public function getByName($name){
+
+         return PartNumber::where('name','=', $name)->get();
     }
 }

@@ -1,6 +1,9 @@
 <?php
 
 use Illuminate\Http\Request;
+use App\Concession;
+use App\Http\Controllers\ConcessionController;
+use App\Http\Controllers\PartNumberController;
 
 /*
 |--------------------------------------------------------------------------
@@ -16,6 +19,11 @@ use Illuminate\Http\Request;
 Route::middleware('auth:api')->get('/user', function (Request $request) {
     return $request->user();
 });
+
+
+Route::get('/partnumber/name/{name}', ['uses' =>'PartNumberController@getByName']);
+
+Route::get('/concession/partnumber/{id}', ['uses' =>'ConcessionController@getByPartNumber']);
 
 Route::resource('user', 'UserController',
 	['only' => ['index', 'store', 'update', 'destroy', 'show']]);
