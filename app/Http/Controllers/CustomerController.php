@@ -15,7 +15,7 @@ class CustomerController extends Controller
      */
     public function index()
     {
-        return Customer::all();
+       return Customer::all();
     }
 
 
@@ -27,8 +27,34 @@ class CustomerController extends Controller
      */
     public function store(Request $request)
     {
-        Customer::create($request->all());
-        return ['created' => true];
+         if (!is_array($request->all())) {
+            return ['error' => 'request must be an array'];
+        }
+
+         // Creamos las reglas de validación
+        $rules = [
+            'name'      => 'required',
+            'supplier_id' => 'required|exist:suppliers,id',
+            'created_at' => 'required',
+            'updated_at' => 'required'
+            ];
+
+       try {
+            // Ejecutamos el validador y en caso de que falle devolvemos la respuesta
+            $validator = \Validator::make($request->all(), $rules);
+            if ($validator->fails()) {
+                return [
+                    'created' => false,
+                    'errors'  => $validator->errors()->all()
+                ];
+            }
+ 
+            Customer::create($request->all());
+            return ['created' => true];
+        } catch (Exception $e) {
+            \Log::info('Error creating customer: '.$e);
+            return \Response::json(['created' => false], 500);
+        }
     }
 
     /**
@@ -39,7 +65,7 @@ class CustomerController extends Controller
      */
     public function show($id)
     {
-         return Customer::findOrFail($id);
+      return Customer::findOrFail($id);
     }
 
     /**
@@ -51,9 +77,36 @@ class CustomerController extends Controller
      */
     public function update(Request $request, $id)
     {
+        if (!is_array($request->all())) {
+            return ['error' => 'request must be an array'];
+        }
+        
+                //Reglas de Validacion
+        $rules = [
+            'name'      => 'required',
+            'supplier_id' => 'required|exist:suppliers,id',
+            'created_at' => 'required',
+            'updated_at' => 'required'
+        ];
+        
+        try {
+        //Se ejecuta el validador
+        $validator = \Validator::make($request->all(), $rules);
+        if($validator->fails()){
+            return [
+                'updated' => false,
+                'errors' => $validator->errors()->all()
+            ];
+        }
+        
         $customer = Customer::findOrFail($id);
         $customer->update($request->all());
         return ['updated' => true];
+            
+            }catch (Exception $e) {
+            \Log::info('Error updating the requested customer: '.$e);
+            return \Response::json(['updated' => false], 500);
+        }
     }
 
     /**
@@ -64,7 +117,27 @@ class CustomerController extends Controller
      */
     public function destroy($id)
     {
+        //Reglas de Validacion
+        $rules = [
+            'id'  => 'required|exist:customers,id'
+        ];
+        
+        try {
+        //Se ejecuta el validador
+        $validator = \Validator::make($request->all(), $rules);
+        if($validator->fails()){
+            return [
+                'deleted' => false,
+                'errors' => $validator->errors()->all()
+            ];
+        }
+        
         Customer::destroy($id);
         return ['deleted' => true];
+            
+            }catch (Exception $e) {
+            \Log::info('Error deleting the selected customer: '.$e);
+            return \Response::json(['deleted' => false], 500);
+        }
     }
 }

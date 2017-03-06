@@ -15,7 +15,7 @@ class SupplierController extends Controller
      */
     public function index()
     {
-        return Supplier::all();
+       return Supplier::all();
     }
 
     /**
@@ -26,8 +26,33 @@ class SupplierController extends Controller
      */
     public function store(Request $request)
     {
-        Supplier::create($request->all());
-        return ['created' => true];
+         if (!is_array($request->all())) {
+            return ['error' => 'request must be an array'];
+        }
+
+         // Creamos las reglas de validación
+        $rules = [
+            'name'      => 'required',
+            'created_at' => 'required',
+            'updated_at' => 'required'
+            ];
+
+       try {
+            // Ejecutamos el validador y en caso de que falle devolvemos la respuesta
+            $validator = \Validator::make($request->all(), $rules);
+            if ($validator->fails()) {
+                return [
+                    'created' => false,
+                    'errors'  => $validator->errors()->all()
+                ];
+            }
+ 
+            Supplier::create($request->all());
+            return ['created' => true];
+        } catch (Exception $e) {
+            \Log::info('Error creating supplier: '.$e);
+            return \Response::json(['created' => false], 500);
+        }
     }
 
     /**
@@ -38,7 +63,7 @@ class SupplierController extends Controller
      */
     public function show($id)
     {
-        return Concession::findOrFail($id);
+        return Supplier::findOrFail($id);
     }
 
     /**
@@ -50,9 +75,35 @@ class SupplierController extends Controller
      */
     public function update(Request $request, $id)
     {
+        if (!is_array($request->all())) {
+            return ['error' => 'request must be an array'];
+        }
+        
+                //Reglas de Validacion
+        $rules = [
+            'name'    => 'required',
+            'created_at' => 'required',
+            'updated_at' => 'required'
+        ];
+        
+        try {
+        //Se ejecuta el validador
+        $validator = \Validator::make($request->all(), $rules);
+        if($validator->fails()){
+            return [
+                'updated' => false,
+                'errors' => $validator->errors()->all()
+            ];
+        }
+        
         $supplier = Supplier::findOrFail($id);
         $supplier->update($request->all());
         return ['updated' => true];
+            
+            }catch (Exception $e) {
+            \Log::info('Error updating the requested supplier: '.$e);
+            return \Response::json(['updated' => false], 500);
+        }
     }
     
 
@@ -64,7 +115,27 @@ class SupplierController extends Controller
      */
     public function destroy($id)
     {
-        User::destroy($id);
+        //Reglas de Validacion
+        $rules = [
+            'id'  => 'required|exist:suppliers,id'
+        ];
+        
+        try {
+        //Se ejecuta el validador
+        $validator = \Validator::make($request->all(), $rules);
+        if($validator->fails()){
+            return [
+                'deleted' => false,
+                'errors' => $validator->errors()->all()
+            ];
+        }
+        
+        Supplier::destroy($id);
         return ['deleted' => true];
+            
+            }catch (Exception $e) {
+            \Log::info('Error deleting the selected supplier: '.$e);
+            return \Response::json(['deleted' => false], 500);
+        }
     }
 }

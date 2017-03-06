@@ -16,7 +16,7 @@ class UserController extends Controller
      */
     public function index()
     {
-        return User::all();
+      return User::all();
     }
 
     /**
@@ -62,7 +62,8 @@ class UserController extends Controller
      */
     public function show($id)
     {
-         return User::findOrFail($id);
+      return User::findOrFail($id);
+    
     }
 
     /**
@@ -74,9 +75,33 @@ class UserController extends Controller
      */
     public function update(Request $request, $id)
     {
+        if (!is_array($request->all())) {
+            return ['error' => 'request must be an array'];
+        }
+        
+                //Reglas de Validacion
+        $rules = [
+            'name'    => 'required'
+        ];
+        
+        try {
+        //Se ejecuta el validador
+        $validator = \Validator::make($request->all(), $rules);
+        if($validator->fails()){
+            return [
+                'updated' => false,
+                'errors' => $validator->errors()->all()
+            ];
+        }
+        
         $user = User::findOrFail($id);
         $user->update($request->all());
         return ['updated' => true];
+            
+            }catch (Exception $e) {
+            \Log::info('Error updating the requested user: '.$e);
+            return \Response::json(['updated' => false], 500);
+        }
     }
 
     /**
@@ -87,7 +112,27 @@ class UserController extends Controller
      */
     public function destroy($id)
     {
-         User::destroy($id);
+          //Reglas de Validacion
+        $rules = [
+            'id'  => 'required|exist:users,id'
+        ];
+        
+        try {
+        //Se ejecuta el validador
+        $validator = \Validator::make($request->all(), $rules);
+        if($validator->fails()){
+            return [
+                'deleted' => false,
+                'errors' => $validator->errors()->all()
+            ];
+        }
+        
+        User::destroy($id);
         return ['deleted' => true];
+            
+            }catch (Exception $e) {
+            \Log::info('Error deleting the selected user: '.$e);
+            return \Response::json(['deleted' => false], 500);
+        }
     }
 }

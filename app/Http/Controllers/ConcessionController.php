@@ -13,7 +13,7 @@ class ConcessionController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-    public function index()
+    public function index(Request $request)
     {
         return Concession::all();
     }
@@ -36,9 +36,9 @@ class ConcessionController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function show($id)
+    public function show(Request $request, $id)
     {
-        return Concession::findOrFail($id);
+       return User::findOrFail($id);
     }
 
     /**
@@ -47,10 +47,12 @@ class ConcessionController extends Controller
      * @param  int  $partnumber_id
      * @return \Illuminate\Http\Response
      */
-    public function getByPartNumber($id)
+    public function getByPartNumber(Request $request, $id)
     {
         
+        
     return Concession::where('partnumber_id','=', $id)->get();
+            
     }
 
 
@@ -63,9 +65,39 @@ class ConcessionController extends Controller
      */
     public function update(Request $request, $id)
     {
+        if (!is_array($request->all())) {
+            return ['error' => 'request must be an array'];
+        }
+        
+                //Reglas de Validacion
+        $rules = [
+            'model'    => 'required',
+            'description' => 'required',
+            'status'    => 'required',
+            'quantity'  => 'required',
+            'riskrelease_id'    => 'required|exist:riskreleases,id',
+            'partnumber_id' => 'required|exist:partnumbers,id',
+            'customer_id'   => 'required|exist:customers,id'
+        ];
+        
+        try {
+        //Se ejecuta el validador
+        $validator = \Validator::make($request->all(), $rules);
+        if($validator->fails()){
+            return [
+                'updated' => false,
+                'errors' => $validator->errors()->all()
+            ];
+        }
+        
         $concession = Concession::findOrFail($id);
         $concession->update($request->all());
         return ['updated' => true];
+            
+            }catch (Exception $e) {
+            \Log::info('Error updating the requested concession: '.$e);
+            return \Response::json(['updated' => false], 500);
+        }
     }
 
     /**
@@ -74,10 +106,30 @@ class ConcessionController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function destroy($id)
+    public function destroy(Request $request, $id)
     {
+        //Reglas de Validacion
+        $rules = [
+            'id'  => 'required|exist:concessions,id'
+        ];
+        
+        try {
+        //Se ejecuta el validador
+        $validator = \Validator::make($request->all(), $rules);
+        if($validator->fails()){
+            return [
+                'deleted' => false,
+                'errors' => $validator->errors()->all()
+            ];
+        }
+        
         Concession::destroy($id);
         return ['deleted' => true];
+            
+            }catch (Exception $e) {
+            \Log::info('Error deleting the selected concession: '.$e);
+            return \Response::json(['deleted' => false], 500);
+        }
     }
 
 
