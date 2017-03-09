@@ -38,7 +38,7 @@ class ConcessionController extends Controller
      */
     public function show(Request $request, $id)
     {
-       return User::findOrFail($id);
+       return Concession::findOrFail($id);
     }
 
     /**

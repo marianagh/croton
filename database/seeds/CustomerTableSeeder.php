@@ -18,7 +18,7 @@ class CustomerTableSeeder extends Seeder
     	foreach (range(1,20000) as $index) {
 	        DB::table('customers')->insert([
 	            'name' => $faker->company,
-                'supplier_id' => $faker->unique()->numberBetween($min = 1, $max = 10)
+                'supplier_id' => rand(1,20000)
 	        ]);  
         }
     }

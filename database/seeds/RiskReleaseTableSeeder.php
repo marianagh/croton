@@ -18,7 +18,7 @@ class RiskReleaseTableSeeder extends Seeder
     	foreach (range(1,20000) as $index) {
 	        DB::table('riskreleases')->insert([
 	            'description' => $faker->sentence,
-	            'user_id' => $faker->unique()->numberBetween($min = 1, $max = 10),
+	            'user_id' => rand(1,20000),
 	            'init_date' => $faker->date($format = 'Y-m-d', $max = 'now'),
 	            'end_date' => $faker->date($format = 'Y-m-d', $max = 'now')
 
