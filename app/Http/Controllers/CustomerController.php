@@ -15,7 +15,7 @@ class CustomerController extends Controller
      */
     public function index()
     {
-       return Customer::all();
+       return Customer::with('supplier')->get();
     }
 
 
@@ -65,7 +65,7 @@ class CustomerController extends Controller
      */
     public function show($id)
     {
-      return Customer::findOrFail($id);
+      return Customer::findOrFail($id)->with('supplier')->get()->first();
     }
 
     /**

@@ -19,4 +19,9 @@ class RiskRelease extends Model
     {
         return $this->belongsTo('App\User');
     }
+
+    public function concession(){
+      return $this->hasMany('App\Concession');
+    }
+
 }

@@ -16,12 +16,14 @@ class Concession extends Model
         return $this->belongsTo('App\Customer');
     }
 
-     public function partnumber()
+       public function riskrelease()
     {
-        return $this->hasOne('App\PartNumber');
+        return $this->belongsTo('App\RiskRelease');
     }
 
-    public function riskrelease(){
-    	return $this->hasOne('App\RiskRelease');
+        public function partnumber()
+    {
+        return $this->belongsTo('App\PartNumber');
     }
+
 }

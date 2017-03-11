@@ -15,5 +15,7 @@ class PartNumber extends Model
      */
     protected $table = 'partnumbers';
 
-    
+     public function concession(){
+            return $this->hasMany('App\Concession');
+        }
 }

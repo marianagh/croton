@@ -3,6 +3,8 @@
 namespace App\Http\Controllers;
 
 use App\Concession;
+use App\PartNumber;
+use App\Customer;
 
 use Illuminate\Http\Request;
 
@@ -14,8 +16,13 @@ class ConcessionController extends Controller
      * @return \Illuminate\Http\Response
      */
     public function index(Request $request)
-    {
-        return Concession::all();
+    {   
+        ini_set('memory_limit', '512M');
+        ini_set('max_execution_time', 300);
+        return Concession::with('riskrelease')
+       ->with('customer')
+       ->with('partnumber')
+       ->get();
     }
 
     /**
@@ -38,7 +45,13 @@ class ConcessionController extends Controller
      */
     public function show(Request $request, $id)
     {
-       return Concession::findOrFail($id);
+       ini_set('memory_limit', '256M');
+      ini_set('max_execution_time', 300);
+       return Concession::findOrFail($id)
+       ->with('riskrelease')
+       ->with('customer')
+       ->with('partnumber')
+       ->get()->first();
     }
 
     /**
@@ -50,8 +63,13 @@ class ConcessionController extends Controller
     public function getByPartNumber(Request $request, $id)
     {
         
-        
-    return Concession::where('partnumber_id','=', $id)->get();
+        ini_set('memory_limit', '512M');
+        ini_set('max_execution_time', 300);
+        return Concession::where('partnumber_id','=', $id)
+        ->with('riskrelease')
+        ->with('customer')
+        ->with('partnumber')
+        ->get();
             
     }
 

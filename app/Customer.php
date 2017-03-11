@@ -20,4 +20,9 @@ class Customer extends Model
     {
         return $this->belongsTo('App\Supplier');
     }
+
+        public function concession(){
+            return $this->hasMany('App\Concession');
+        }
+
 }

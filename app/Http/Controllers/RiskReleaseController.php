@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 use App\RiskRelease;
+use App\User;
 
 class RiskReleaseController extends Controller
 {
@@ -14,7 +15,7 @@ class RiskReleaseController extends Controller
      */
     public function index()
     {
-       return RiskRelease::all();
+       return RiskRelease::with('user')->get();
     }
 
     /**
@@ -65,7 +66,7 @@ class RiskReleaseController extends Controller
      */
     public function show($id)
     {
-     return RiskRelease::findOrFail($id);
+     return RiskRelease::findOrFail($id)->with('user')->get()->first();
     }
 
     /**
