@@ -3,6 +3,11 @@
 namespace App;
 
 use Illuminate\Database\Eloquent\Model;
+/**
+ * 
+ * @resource RiskRelease
+ * Representa una RiskRelease en el negocio.
+ */
 
 class RiskRelease extends Model
 {

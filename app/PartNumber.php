@@ -4,6 +4,12 @@ namespace App;
 
 use Illuminate\Database\Eloquent\Model;
 
+/**
+ * 
+ * @resource PartNumber
+ * Representa una PartNumber en el negocio.
+ */
+
 class PartNumber extends Model
 {
     protected $fillable = array('description', 'name');

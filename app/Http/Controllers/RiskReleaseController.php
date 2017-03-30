@@ -4,23 +4,29 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 use App\RiskRelease;
-use App\User;
 
+/**
+ * 
+ * @resource RiskReleaseController
+ * Se encarga de realizar las operaciones relacionadas
+ * a RiskRelease.
+ */
 class RiskReleaseController extends Controller
 {
     /**
-     * Display a listing of the resource.
-     *
+     * Muestra los RiskRelease registrados.
+     * GET /riskrelease/
      * @return \Illuminate\Http\Response
      */
     public function index()
     {
-       return RiskRelease::with('user')->get();
+        return RiskRelease::with('user')->get();
     }
 
     /**
-     * Store a newly created resource in storage.
-     *
+     * 
+     * Guarda un RiskRelease nuevo en la base de datos.
+     * POST /riskrelease/
      * @param  \Illuminate\Http\Request  $request
      * @return \Illuminate\Http\Response
      */
@@ -59,19 +65,21 @@ class RiskReleaseController extends Controller
     }
 
     /**
-     * Display the specified resource.
-     *
+     * 
+     * Muestra un RiskRelease en base al id si es que existe.
+     * GET /riskrelease/{id}
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
     public function show($id)
     {
-     return RiskRelease::findOrFail($id)->with('user')->get()->first();
+       return RiskRelease::findOrFail($id)->with('user')->get()->first();
     }
 
     /**
-     * Update the specified resource in storage.
-     *
+     * 
+     * Actualia el Riskrelease especificado.
+     * PUT /riskrelease/{id}
      * @param  \Illuminate\Http\Request  $request
      * @param  int  $id
      * @return \Illuminate\Http\Response
@@ -114,8 +122,9 @@ class RiskReleaseController extends Controller
     
 
     /**
-     * Remove the specified resource from storage.
-     *
+     * 
+     * Elimina el RiskRelease con el id especificado de la base de datos.
+     * DELETE /riskrelease/{id}
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */

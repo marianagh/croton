@@ -16,11 +16,7 @@ use App\Http\Controllers\PartNumberController;
 |
 */
 
-Route::middleware('auth:api')->get('/user', function (Request $request) {
-    return $request->user();
-});
-
-
+Route::group(array('prefix' => '/v1', 'middleware' => []), function () {
 Route::get('/partnumber/name/{name}', ['uses' =>'PartNumberController@getByName']);
 
 Route::get('/concession/partnumber/{id}', ['uses' =>'ConcessionController@getByPartNumber']);
@@ -43,3 +39,4 @@ Route::resource('customer', 'CustomerController',
 
 Route::resource('concession', 'ConcessionController',
 	['only' => ['index', 'store', 'update', 'destroy', 'show']]);
+});

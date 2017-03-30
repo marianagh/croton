@@ -5,11 +5,18 @@ namespace App\Http\Controllers;
 use Illuminate\Http\Request;
 use App\PartNumber;
 
+/**
+ * 
+ * @resource PartNumberController
+ * Se encarga de realizar las operaciones relacionadas
+ * a PartNumber.
+ */
+
 class PartNumberController extends Controller
 {
-      /**
-     * Display a listing of the resource.
-     *
+    /**
+     * Muestra la lista de PartNumber registrados.
+     * GET /partnumber/
      * @return \Illuminate\Http\Response
      */
     public function index(Request $request)
@@ -18,8 +25,8 @@ class PartNumberController extends Controller
     }
 
     /**
-     * Store a newly created resource in storage.
-     *
+     * Guarda un PartNumber nuevo en la base de datos.
+     * POST /partnumber/
      * @param  \Illuminate\Http\Request  $request
      * @return \Illuminate\Http\Response
      */
@@ -56,8 +63,8 @@ class PartNumberController extends Controller
     }
 
     /**
-     * Display the specified resource.
-     *
+     * Muestra un PartNumber pr ID.
+     * GET /partnumber/{id}
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
@@ -68,8 +75,8 @@ class PartNumberController extends Controller
 
 
     /**
-     * Update the specified resource in storage.
-     *
+     * Actualiza el PartNumber en la base de datos.
+     * PUT /partnumber/{id}
      * @param  \Illuminate\Http\Request  $request
      * @param  int  $id
      * @return \Illuminate\Http\Response
@@ -109,8 +116,8 @@ class PartNumberController extends Controller
     
 
     /**
-     * Remove the specified resource from storage.
-     *
+     * Elimina el PartNumber con el id especificado de la base de datos.
+     * DELETE /partnumber/{id}
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
@@ -141,8 +148,8 @@ class PartNumberController extends Controller
         }
     }
     /**
-     * Display the partnumber with the name.
-     *
+     * Muestra el PartNumber por nombre.
+     * GET /partnumber/name/{name}
      * @param  string  $name
      * @return \Illuminate\Http\Response
      */

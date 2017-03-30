@@ -3,6 +3,11 @@
 namespace App;
 
 use Illuminate\Database\Eloquent\Model;
+/**
+ * 
+ * @resource Customer
+ * Representa un Customer en el negocio.
+ */
 
 class Customer extends Model
 {

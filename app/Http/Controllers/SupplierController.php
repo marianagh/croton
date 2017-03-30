@@ -6,11 +6,18 @@ use Illuminate\Http\Request;
 
 use App\Supplier;
 
+/**
+ * 
+ * @resource SupplierController
+ * Se encarga de realizar las operaciones relacionadas
+ * a Supplier.
+ */
+
 class SupplierController extends Controller
 {
     /**
-     * Display a listing of the resource.
-     *
+     * Obtiene los Supplier registrados.
+     * GET /supplier/
      * @return \Illuminate\Http\Response
      */
     public function index()
@@ -19,8 +26,9 @@ class SupplierController extends Controller
     }
 
     /**
-     * Store a newly created resource in storage.
-     *
+     * 
+     * Guarda un Supplier nuevo en la base de datos.
+     * POST /supplier/
      * @param  \Illuminate\Http\Request  $request
      * @return \Illuminate\Http\Response
      */
@@ -56,8 +64,8 @@ class SupplierController extends Controller
     }
 
     /**
-     * Display the specified resource.
-     *
+     * Muestra un Supplier en base al id si es que existe.
+     * GET /supplier/{id}
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
@@ -67,8 +75,9 @@ class SupplierController extends Controller
     }
 
     /**
-     * Update the specified resource in storage.
-     *
+     * 
+     * Actualiza el Supplier especificado.
+     * PUT /supplier/{id}
      * @param  \Illuminate\Http\Request  $request
      * @param  int  $id
      * @return \Illuminate\Http\Response
@@ -108,8 +117,9 @@ class SupplierController extends Controller
     
 
     /**
-     * Remove the specified resource from storage.
-     *
+     * 
+     * Elimina el Supplier especificado de la base de datos.
+     * DELETE /supplier/{id}
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */

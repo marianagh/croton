@@ -5,13 +5,19 @@ use App\User;
 
 use Illuminate\Http\Request;
 
+/**
+ * 
+ * @resource UserController
+ * Se encarga de realizar las operaciones relacionadas
+ * a User.
+ */
+
 class UserController extends Controller
 {
    
-
     /**
-     * Display a listing of the resource.
-     *
+     * Obtiene los User registrados.
+     * GET /user/
      * @return \Illuminate\Http\Response
      */
     public function index()
@@ -20,8 +26,9 @@ class UserController extends Controller
     }
 
     /**
-     * Store a newly created resource in storage.
      *
+     * Guarda un User nuevo en la base de datos.
+     * POST /user/
      * @param  \Illuminate\Http\Request  $request
      * @return \Illuminate\Http\Response
      */
@@ -55,8 +62,9 @@ class UserController extends Controller
     }
 
     /**
-     * Display the specified resource.
-     *
+     * 
+     * Muestra un User en base al id especificado.
+     * GET /user/{id}
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
@@ -67,8 +75,9 @@ class UserController extends Controller
     }
 
     /**
-     * Update the specified resource in storage.
-     *
+     * 
+     * Actualiza un User especificado.
+     * PUT /user/{id}
      * @param  \Illuminate\Http\Request  $request
      * @param  int  $id
      * @return \Illuminate\Http\Response
@@ -105,8 +114,9 @@ class UserController extends Controller
     }
 
     /**
-     * Remove the specified resource from storage.
-     *
+     * 
+     * Elimina un User especificado de la base de datos.
+     * DELETE /user/{id}
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */

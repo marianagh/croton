@@ -3,6 +3,11 @@
 namespace App;
 
 use Illuminate\Database\Eloquent\Model;
+/**
+ * 
+ * @resource Concession
+ * Representa una Concession en el negocio.
+ */
 
 class Concession extends Model
 {

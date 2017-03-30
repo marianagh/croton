@@ -5,12 +5,18 @@ namespace App\Http\Controllers;
 use Illuminate\Http\Request;
 
 use App\Customer;
+/**
+ * 
+ * @resource CustomerController
+ * Se encarga de realizar las operaciones relacionadas
+ * a Customer.
+ */
 
 class CustomerController extends Controller
 {
     /**
-     * Display a listing of the resource.
-     *
+     * Obtiene todos los Customer registrados.
+     * GET /customer/
      * @return \Illuminate\Http\Response
      */
     public function index()
@@ -20,8 +26,8 @@ class CustomerController extends Controller
 
 
     /**
-     * Store a newly created resource in storage.
-     *
+     * Guarda un Costumer nuevo en la base de datos.
+     * POST /customer/
      * @param  \Illuminate\Http\Request  $request
      * @return \Illuminate\Http\Response
      */
@@ -58,19 +64,20 @@ class CustomerController extends Controller
     }
 
     /**
-     * Display the specified resource.
-     *
+     * Muestra un Customer por id.
+     * GET /customer/{id}
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
     public function show($id)
     {
-      return Customer::findOrFail($id)->with('supplier')->get()->first();
+       return Customer::findOrFail($id)->with('supplier')->get()->first();
     }
 
     /**
-     * Update the specified resource in storage.
-     *
+     * 
+     * Actualiza el Customer especificado en la base de datos.
+     * PUT /customer/{id}
      * @param  \Illuminate\Http\Request  $request
      * @param  int  $id
      * @return \Illuminate\Http\Response
@@ -110,8 +117,9 @@ class CustomerController extends Controller
     }
 
     /**
-     * Remove the specified resource from storage.
-     *
+     * 
+     * Elimina el Customer especificado de la base de datos.
+     * DELETE /customer/{id}
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
