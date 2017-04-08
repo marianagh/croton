@@ -3,6 +3,8 @@
 namespace App;
 
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Contracts\Auth\Authenticatable;
+use Illuminate\Auth\Authenticatable as AuthenticableTrait;
 
 /**
  * 
@@ -10,9 +12,10 @@ use Illuminate\Database\Eloquent\Model;
  * Representa una User en el negocio.
  */
 
-class User extends Model
-{
-     protected $fillable = array('name');
+class User extends Model implements Authenticatable
+{	
+	use AuthenticableTrait;
+    protected $fillable = array('name','email', 'password');
     public $timestamps = false;
 
      public function releases()

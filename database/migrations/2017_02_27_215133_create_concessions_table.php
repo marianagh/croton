@@ -38,6 +38,6 @@ class CreateConcessionsTable extends Migration
      */
     public function down()
     {
-       Schema::drop('concessions');
+       Schema::dropIfExists('concessions');
     }
 }

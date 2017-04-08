@@ -15,7 +15,7 @@ class RiskReleaseTableSeeder extends Seeder
     public function run()
     {
         $faker = Faker::create();
-    	foreach (range(1,20000) as $index) {
+    	foreach (range(1,20) as $index) {
 	        DB::table('riskreleases')->insert([
 	            'description' => $faker->sentence,
 	            'user_id' => rand(1,20000),

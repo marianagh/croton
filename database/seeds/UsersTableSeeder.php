@@ -15,7 +15,7 @@ class UsersTableSeeder extends Seeder
     public function run()
     {
         $faker = Faker::create();
-    	foreach (range(1,20000) as $index) {
+    	foreach (range(1,20) as $index) {
 	        DB::table('users')->insert([
 	            'name' => $faker->name
 	        ]);  

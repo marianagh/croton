@@ -16,7 +16,7 @@ class ConcessionTableSeeder extends Seeder
     public function run()
     {
         $faker = Faker::create();
-    	foreach (range(1,20000) as $index) {
+    	foreach (range(1,20) as $index) {
 	        DB::table('concessions')->insert([
 	            'model' => $faker->numerify('MOD #######'),
 	            'description' => $faker->text($maxNbChars = 200),

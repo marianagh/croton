@@ -11,7 +11,15 @@
 |
 */
 
-Route::get('/', function () {
-    return view('welcome');
+
+Route::get('/cpanel', function () {
+    return view('cpanel');
 });
 
+Route::get('/', function () {
+    return view('home');
+});
+
+Auth::routes();
+
+Route::get('/home', 'HomeController@index');
