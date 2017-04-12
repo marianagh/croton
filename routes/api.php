@@ -22,7 +22,7 @@ Route::get('/partnumber/name/{name}', ['uses' =>'PartNumberController@getByName'
 
 Route::get('/concession/partnumber/{id}', ['uses' =>'ConcessionController@getByPartNumber']);
 
-Route::resource('user', 'UserControler',
+Route::resource('user', 'UserController',
 	['only' => ['index', 'store', 'update', 'destroy', 'show']]);
 
 

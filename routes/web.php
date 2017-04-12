@@ -16,11 +16,10 @@ Route::get('/cpanel', function () {
     return view('cpanel');
 });
 
-Route::get('/', function () {
-    return view('home');
-});
+Route::resource('home', 'HomeController');
 
 Auth::routes();
 
-Route::get('/home', 'HomeController@index');
+Route::get('/', 'HomeController@index');
 
+Route::resource('users', 'UserController');
