@@ -53,9 +53,8 @@
                         <li {{ (Request::is('/') ? 'class="active"' : '') }}>
                             <a href="{{ url ('/') }}"><i class="fa fa-dashboard fa-fw"></i> Dashboard</a>
                         </li>
-                        <li {{ (Request::is('*charts') ? 'class="active"' : '') }}>
-                            <a href="{{ url ('charts') }}"><i class="fa fa-cogs fa-fw"></i> Partes</a>
-                            <!-- /.nav-second-level -->
+                        <li>
+                            <a href="{{ url ('parts') }}"><i class="fa fa-cogs fa-fw"></i> Partes</a>
                         </li>
                         <li>
                             <a href="{{ url ('concessions') }}"><i class="fa fa-table fa-fw"></i> Concesiones</a>
@@ -94,4 +93,3 @@
         </div>
     </div>
 @stop
-

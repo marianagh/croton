@@ -21,45 +21,34 @@ class PartNumberController extends Controller
      */
     public function index(Request $request)
     {
-        return PartNumber::all();
+       $parts = PartNumber::all();
+         return \View::make('parts.index')
+            ->with('parts', $parts);
     }
-
-    /**
+/**
      * Guarda un PartNumber nuevo en la base de datos.
      * POST /partnumber/
-     * @param  \Illuminate\Http\Request  $request
-     * @return \Illuminate\Http\Response
+     * @param  Illuminate\Http\Request $request
+     * @return PartNumber
      */
     public function store(Request $request)
+    {   
+        $data = $request->all();
+    PartNumber::create([
+        'name' => $data['name'],
+        'description' => $data['description'],
+    ]);
+    return \Redirect::to('parts');
+    }
+
+      /**
+     * Show the form for creating a new resource.
+     *
+     * @return \Illuminate\Http\Response
+     */
+    public function create()
     {
-        if (!is_array($request->all())) {
-            return ['error' => 'request must be an array'];
-        }
-        
-        //Reglas de Validacion
-        $rules = [
-            'name'    => 'required',
-            'description' => 'required'
-        ];
-        
-        try {
-        //Se ejecuta el validador
-        $validator = \Validator::make($request->all(), $rules);
-        if($validator->fails()){
-            return [
-                'created' => false,
-                'errors' => $validator->errors()->all()
-                ];
-            
-        }
-        
-        PartNumber::create($request->all());
-        return ['created' => true];
-        
-        }catch (Exception $e) {
-            \Log::info('Error creating PartNumber: '.$e);
-            return \Response::json(['created' => false], 500);
-        }
+          return \View::make('parts.create');
     }
 
     /**
@@ -70,9 +59,23 @@ class PartNumberController extends Controller
      */
     public function show($id)
     {
-       return PartNumber::findOrFail($id);
+        $part = PartNumber::findOrFail($id);
+        return \View::make('parts.show')
+            ->with('part', $part);
     }
 
+    /**
+     * Show the form for editing the specified resource.
+     *
+     * @param  int $id
+     * @return \Illuminate\Http\Response
+     */
+    public function edit($id)
+    {
+          $part= PartNumber::findOrFail($id);
+        return \View::make('parts.edit')
+            ->with('part', $part);
+    }
 
     /**
      * Actualiza el PartNumber en la base de datos.
@@ -121,31 +124,12 @@ class PartNumberController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function destroy(Request $request, $id)
+    public function destroy($id)
     {
-        //Reglas de Validacion
-        $rules = [
-            'id'  => 'required|exist:partnumbers,id'
-        ];
-        
-        try {
-        //Se ejecuta el validador
-        $validator = \Validator::make($request->all(), $rules);
-        if($validator->fails()){
-            return [
-                'deleted' => false,
-                'errors' => $validator->errors()->all()
-            ];
-        }
-        
-        
-        PartNumber::destroy($id);
-        return ['deleted' => true];
-            
-            }catch (Exception $e) {
-            \Log::info('Error deleting the selected PartNumber: '.$e);
-            return \Response::json(['deleted' => false], 500);
-        }
+        $partnumber = PartNumber::findOrFail($id);
+        $partnumber->delete();
+        \Session::flash('message', 'Se ha eliminado el partnumber');
+        return \Redirect::to('users');
     }
     /**
      * Muestra el PartNumber por nombre.

@@ -23,3 +23,5 @@ Auth::routes();
 Route::get('/', 'HomeController@index');
 
 Route::resource('users', 'UserController');
+
+Route::resource('parts', 'PartNumberController');
