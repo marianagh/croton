@@ -129,7 +129,7 @@ class PartNumberController extends Controller
         $partnumber = PartNumber::findOrFail($id);
         $partnumber->delete();
         \Session::flash('message', 'Se ha eliminado el partnumber');
-        return \Redirect::to('users');
+        return \Redirect::to('parts');
     }
     /**
      * Muestra el PartNumber por nombre.
