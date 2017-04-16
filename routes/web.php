@@ -27,3 +27,7 @@ Route::resource('users', 'UserController');
 Route::resource('parts', 'PartNumberController');
 
 Route::resource('suppliers', 'SupplierController');
+
+Route::resource('customers', 'CustomerController');
+
+Route::resource('risks', 'RiskReleaseController');

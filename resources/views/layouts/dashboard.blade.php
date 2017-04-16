@@ -60,10 +60,10 @@
                             <a href="{{ url ('concessions') }}"><i class="fa fa-table fa-fw"></i> Concesiones</a>
                         </li>
                         <li>
-                            <a href="{{ url ('releases') }}"><i class="fa fa-tasks fa-fw"></i> Releases</a>
+                            <a href="{{ url ('risks') }}"><i class="fa fa-tasks fa-fw"></i> Releases</a>
                         </li>
                          <li>
-                            <a href="{{ url ('clients') }}"><i class="fa fa-users fa-fw"></i> Clientes</a>
+                            <a href="{{ url ('customers') }}"><i class="fa fa-users fa-fw"></i> Clientes</a>
                         </li>
                          <li>
                             <a href="{{ url ('suppliers') }}"><i class="fa fa-book fa-fw"></i> Proveedores</a>

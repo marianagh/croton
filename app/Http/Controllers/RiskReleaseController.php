@@ -20,8 +20,22 @@ class RiskReleaseController extends Controller
      */
     public function index()
     {
-        return RiskRelease::with('user')->get();
+        $riskreleases = RiskRelease::all();
+        return \View::make('risks.index')
+        ->with('riskreleases', $riskreleases);
     }
+
+
+    /**
+     * Show the form for creating a new resource.
+     *
+     * @return \Illuminate\Http\Response
+     */
+    public function create()
+    {
+          return \View::make('risks.create');
+    }
+
 
     /**
      * 
@@ -32,36 +46,14 @@ class RiskReleaseController extends Controller
      */
     public function store(Request $request)
     {
-        if (!is_array($request->all())) {
-            return ['error' => 'request must be an array'];
-        }
-
-         // Creamos las reglas de validación
-        $rules = [
-            'description'      => 'required',
-            'user_id' => 'required|exist:users,id',
-            'init_date' => 'required',
-            'end_date' => 'required',
-            'created_at' => 'required',
-            'updated_at' => 'required'
-            ];
-
-       try {
-            // Ejecutamos el validador y en caso de que falle devolvemos la respuesta
-            $validator = \Validator::make($request->all(), $rules);
-            if ($validator->fails()) {
-                return [
-                    'created' => false,
-                    'errors'  => $validator->errors()->all()
-                ];
-            }
- 
-            RiskRelease::create($request->all());
-            return ['created' => true];
-        } catch (Exception $e) {
-            \Log::info('Error creating risk release: '.$e);
-            return \Response::json(['created' => false], 500);
-        }
+        $data = $request->all();
+    RiskRelease::create([
+        'description' => $data['description'],
+        'init_date' => $data['init_date'],
+        'end_date' => $data['end_date'],
+        'user_id' => $data['user_id'],
+    ]);
+    return \Redirect::to('risks');
     }
 
     /**
@@ -73,7 +65,8 @@ class RiskReleaseController extends Controller
      */
     public function show($id)
     {
-       return RiskRelease::findOrFail($id)->with('user')->get()->first();
+       $riskrelease = RiskRelease::findOrFail($id);
+        return \View::make('risks.show');
     }
 
     /**
@@ -86,38 +79,7 @@ class RiskReleaseController extends Controller
      */
     public function update(Request $request, $id)
     {
-        if (!is_array($request->all())) {
-            return ['error' => 'request must be an array'];
-        }
-        
-                //Reglas de Validacion
-        $rules = [
-            'description'      => 'required',
-            'user_id' => 'required|exist:users,id',
-            'init_date' => 'required',
-            'end_date' => 'required',
-            'created_at' => 'required',
-            'updated_at' => 'required'
-        ];
-        
-        try {
-        //Se ejecuta el validador
-        $validator = \Validator::make($request->all(), $rules);
-        if($validator->fails()){
-            return [
-                'updated' => false,
-                'errors' => $validator->errors()->all()
-            ];
-        }
-        
-        $riskrelease = RiskRelease::findOrFail($id);
-        $riskrelease->update($request->all());
-        return ['updated' => true];
-            
-            }catch (Exception $e) {
-            \Log::info('Error updating the requested risk release: '.$e);
-            return \Response::json(['updated' => false], 500);
-        }
+    
     }
     
 
@@ -129,28 +91,11 @@ class RiskReleaseController extends Controller
      * @return \Illuminate\Http\Response
      */
     public function destroy($id)
-    {
-        //Reglas de Validacion
-        $rules = [
-            'id'  => 'required|exist:riskreleases,id'
-        ];
-        
-        try {
-        //Se ejecuta el validador
-        $validator = \Validator::make($request->all(), $rules);
-        if($validator->fails()){
-            return [
-                'deleted' => false,
-                'errors' => $validator->errors()->all()
-            ];
-        }
-        
-        RiskRelease::destroy($id);
-        return ['deleted' => true];
-            
-            }catch (Exception $e) {
-            \Log::info('Error deleting the selected risk release: '.$e);
-            return \Response::json(['deleted' => false], 500);
-        }
+    {   
+        $riskrelease = RiskRelease::findOrFail($id);
+        $riskrelease->delete();
+        \Session::flash('message', 'Se ha eliminado exitosamente.');
+        return \Redirect::to('risks');
     }
 }
+
