@@ -8,15 +8,12 @@
             <div class="panel panel-default">
                 <div class="panel-heading">Informacion</div>
                 <div class="panel-body">
-                    <form class="form-horizontal" role="form" method="POST" action="{{$part->id}}/edit/">
                         {{ csrf_field() }}
-
+                         {{ Form::model($part, array('route' => array('parts.update', $part->id), 'class' => 'form-horizontal', 'method' => 'PUT')) }}
                         <div class="form-group{{ $errors->has('name') ? ' has-error' : '' }}">
-                            <label for="name" class="col-md-4 control-label">Nombre</label>
-
+                            {{ Form::label('name', 'Nombre', ['class' => 'col-md-4 control-label']) }}
                             <div class="col-md-6">
-                                <input id="name" type="text" class="form-control" name="name" value="{{ $part->name }}" required autofocus>
-
+                                {{Form::text('name', null, ['class' => 'form-control'])}}
                                 @if ($errors->has('name'))
                                     <span class="help-block">
                                         <strong>{{ $errors->first('name') }}</strong>
@@ -24,29 +21,24 @@
                                 @endif
                             </div>
                         </div>
-                           <div class="form-group{{ $errors->has('description') ? ' has-error' : '' }}">
-                            <label for="name" class="col-md-4 control-label">Descripcion</label>
-
+                        <div class="form-group{{ $errors->has('name') ? ' has-error' : '' }}">
+                            {{ Form::label('description', 'Descripcion', ['class' => 'col-md-4 control-label']) }}
                             <div class="col-md-6">
-                                <input id="description" type="text" class="form-control" name="description" value="{{ $part->description }}" required autofocus>
-
-                                @if ($errors->has('description'))
+                                {{Form::textarea('description',null, ['class' => 'form-control', 'size' => '30x3'])}}
+                                @if ($errors->has('name'))
                                     <span class="help-block">
-                                        <strong>{{ $errors->first('description') }}</strong>
+                                        <strong>{{ $errors->first('name') }}</strong>
                                     </span>
                                 @endif
                             </div>
                         </div>
                         <div class="form-group">
                             <div class="col-md-6 col-md-offset-4">
-                                <button type="submit" class="btn btn-primary">
-                                    Guardar
-                                </button>
-                                 <a class="btn btn-primary" href="{{ URL::to('parts/')}} ">
-                                   Regresar </a>
+                                {{ Form::submit('Editar', array('class' => 'btn btn-primary')) }}
+                                <a class="btn btn-default" href="{{ URL::to('users/')}} "> Regresar </a>
                             </div>
                         </div>
-                    </form>
+                        {{ Form::close() }}
                 </div>
             </div>
         </div>

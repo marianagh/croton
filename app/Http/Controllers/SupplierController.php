@@ -75,12 +75,15 @@ class SupplierController extends Controller
      * Update the specified resource in storage.
      *
      * @param  \Illuminate\Http\Request  $request
-     * @param  \App\User  $user
+     * @param  int $id
      * @return \Illuminate\Http\Response
      */
-    public function update()
+    public function update(Request $request, $id)
     {
-        
+         $supplier = Supplier::findOrFail($id);
+         $supplier->name = $request->input('name');
+         $supplier->save();
+        return \Redirect::to('suppliers');
     }
 
     /**

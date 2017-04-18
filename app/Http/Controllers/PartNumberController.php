@@ -79,7 +79,6 @@ class PartNumberController extends Controller
 
     /**
      * Actualiza el PartNumber en la base de datos.
-     * PUT /partnumber/{id}
      * @param  \Illuminate\Http\Request  $request
      * @param  int  $id
      * @return \Illuminate\Http\Response
@@ -87,34 +86,10 @@ class PartNumberController extends Controller
     public function update(Request $request, $id)
     {
         
-        if (!is_array($request->all())) {
-            return ['error' => 'request must be an array'];
-        }
-        
-        //Reglas de Validacion
-        $rules = [
-            'name'  => 'required',
-            'description' => 'required'
-        ];
-        
-         try {
-        //Se ejecuta el validador
-        $validator = \Validator::make($request->all(), $rules);
-        if($validator->fails()){
-            return [
-                'updated' => false,
-                'errors' => $validator->errors()->all()
-            ];
-        }
-        
         $partnumber = PartNumber::findOrFail($id);
         $partnumber->update($request->all());
-        return ['updated' => true];
-             
-            }catch (Exception $e) {
-            \Log::info('Error updating the  PartNumber: '.$e);
-            return \Response::json(['updated' => false], 500);
-        }
+        return \Redirect::to('parts');
+        
     }
     
 

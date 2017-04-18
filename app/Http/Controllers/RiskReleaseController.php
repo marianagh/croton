@@ -66,7 +66,7 @@ class RiskReleaseController extends Controller
     public function show($id)
     {
        $riskrelease = RiskRelease::findOrFail($id);
-        return \View::make('risks.show');
+        return \View::make('risks.show')->with('riskrelease', $riskrelease);
     }
 
     /**
@@ -80,6 +80,18 @@ class RiskReleaseController extends Controller
     public function update(Request $request, $id)
     {
     
+    }
+
+      /**
+     * Show the form for editing the specified resource.
+     *
+     * @param  int $id
+     * @return \Illuminate\Http\Response
+     */
+    public function edit($id)
+    {
+       $riskrelease = RiskRelease::findOrFail($id);
+        return \View::make('risks.show')->with('riskrelease', $riskrelease);
     }
     
 

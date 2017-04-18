@@ -50,7 +50,6 @@ class CustomerController extends Controller
     public function store(Request $request)
     {
       $data = $request->all();
-      var_dump($data);
       Customer::create([
           'name' => $data['name'],
           'supplier_id'=>$data['supplier_id'],
@@ -78,22 +77,26 @@ class CustomerController extends Controller
      * @return \Illuminate\Http\Response
      */
     public function edit($id)
-    {   $suppliers = Supplier::all();
+    {   $suppliers = Supplier::pluck('name', 'id');
         $customer = Customer::findOrFail($id)->with('supplier')->get()->first();
-        return \View::make('customers.edit')
-        ->with('customer', $customer)
-        ->with('suppliers',$suppliers);
+        return \View::make('customers.edit')->with('suppliers',$suppliers)
+        ->with('customer', $customer);
     }
 
      /**
      * Update the specified resource in storage.
      *
      * @param  \Illuminate\Http\Request  $request
-     * @param  \App\Customer  $customer
+     * @param  int $id
      * @return \Illuminate\Http\Response
      */
-    public function update()
+    public function update(Request $request, $id)
     {
+        $customer = Customer::findOrFail($id);
+        $customer->name = $request->input('name');
+        $customer->supplier_id = $request->input('supplier_id');
+        $customer->save();
+        return \Redirect::to('customers');
         
     }
  

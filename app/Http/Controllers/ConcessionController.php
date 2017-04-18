@@ -3,6 +3,9 @@
 namespace App\Http\Controllers;
 
 use App\Concession;
+use App\Customer;
+use App\PartNumber;
+use App\RiskRelease;
 
 use Illuminate\Http\Request;
 /**
@@ -24,11 +27,27 @@ class ConcessionController extends Controller
     {
         ini_set('memory_limit', '512M');
         ini_set('max_execution_time', 300);
-        return Concession::with('riskrelease')
-       ->with('customer')
-       ->with('partnumber')
-       ->get();    
+        $concessions = Concession::all();
+          return \View::make('concessions.index')
+        ->with('concessions', $concessions);
    }
+     /**
+     * Show the form for creating a new resource.
+     *
+     * @return \Illuminate\Http\Response
+     */
+    public function create()
+    { 
+        $riskreleases = RiskRelease::all(); 
+        $partnumbers = PartNumber::all();
+        $customers = Customer::all();
+
+          return \View::make('concessions.index')
+        ->with('riskreleases', $riskreleases)
+        ->with('partnumbers', $partnumbers)
+        ->with('customers', $customers);
+    }
+
 
     /**
      * Guarda una Concession nueva en la base de datos.
@@ -38,39 +57,18 @@ class ConcessionController extends Controller
      */
     public function store(Request $request)
     {
-
-         if (!is_array($request->all())) {
-            return ['error' => 'request must be an array'];
-        }
-        
-                //Reglas de Validacion
-        $rules = [
-            'model'    => 'required',
-            'description' => 'required',
-            'status'    => 'required',
-            'quantity'  => 'required',
-            'riskrelease_id'    => 'required|exist:riskreleases,id',
-            'partnumber_id' => 'required|exist:partnumbers,id',
-            'customer_id'   => 'required|exist:customers,id'
-        ];
-        
-        try {
-        //Se ejecuta el validador
-        $validator = \Validator::make($request->all(), $rules);
-        if($validator->fails()){
-            return [
-                'updated' => false,
-                'errors' => $validator->errors()->all()
-            ];
-        }
-        
-       Concession::create($request->all());
-        return ['created' => true];
-            
-            }catch (Exception $e) {
-            \Log::info('Error guardando la Concession especificada: '.$e);
-            return \Response::json(['updated' => false], 500);
-        }
+              $data = $request->all();
+        Concession::create([
+        'name' => $data['name'],
+        'model' => $data['model'],
+        'description' => $data['description'],
+        'status' => $data['status'],
+        'work_purchase_order' => $data['work_purchase_order'],
+        'riskrelease_id' => $data['riskrelease_id'],
+        'partnumber_id' => $data['partnumber_id'],
+        'customer_id' => $data['customer_id'],
+    ]);
+    return \Redirect::to('concessions'); 
         
     }
 
@@ -85,11 +83,8 @@ class ConcessionController extends Controller
     {
        ini_set('memory_limit', '256M');
        ini_set('max_execution_time', 300);
-       return Concession::findOrFail($id)
-       ->with('riskrelease')
-       ->with('customer')
-       ->with('partnumber')
-       ->get()->first();
+       $concession = Concession::findOrFail($id);
+       return \View::make('concessions.index')->with('concession',$concession);
     }
 
     /**

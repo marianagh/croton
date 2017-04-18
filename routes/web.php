@@ -31,3 +31,5 @@ Route::resource('suppliers', 'SupplierController');
 Route::resource('customers', 'CustomerController');
 
 Route::resource('risks', 'RiskReleaseController');
+
+Route::resource('concessions', 'ConcessionController');
