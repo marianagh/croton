@@ -33,4 +33,11 @@ class WelcomeController extends Controller {
 		return view('welcome');
 	}
 
+	public function getSignOut() {
+
+    Auth::logout();
+    return Redirect::route('home');
+
+	}
+
 }

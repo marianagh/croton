@@ -16,9 +16,15 @@ Route::get('/cpanel', function () {
     return view('cpanel');
 });
 
-Route::resource('home', 'HomeController');
-
+/* Auth Routes */
 Auth::routes();
+
+Route::get('/logout', array(
+        'as' => 'logout',
+        'uses' => 'WelcomeController@getSignOut'
+    ));
+
+Route::resource('home', 'HomeController');
 
 Route::get('/', 'HomeController@index');
 

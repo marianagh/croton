@@ -38,16 +38,35 @@ class ConcessionController extends Controller
      */
     public function create()
     { 
-        $riskreleases = RiskRelease::all(); 
-        $partnumbers = PartNumber::all();
-        $customers = Customer::all();
+        $riskreleases = RiskRelease::pluck('id');
+        $partnumbers = PartNumber::pluck('name', 'id');
+        $customers = Customer::pluck('name', 'id');
 
-          return \View::make('concessions.index')
+          return \View::make('concessions.create')
         ->with('riskreleases', $riskreleases)
         ->with('partnumbers', $partnumbers)
         ->with('customers', $customers);
     }
 
+  /**
+     * Show the form for editing the specified resource.
+     *
+     * @param  int $id
+     * @return \Illuminate\Http\Response
+     */
+    public function edit($id)
+    {
+        $concession = Concession::findOrFail($id);
+        $riskreleases = RiskRelease::pluck('id');
+        $partnumbers = PartNumber::pluck('name', 'id');
+        $customers = Customer::pluck('name', 'id');
+
+          return \View::make('concessions.edit')
+        ->with('riskreleases', $riskreleases)
+        ->with('partnumbers', $partnumbers)
+        ->with('customers', $customers)
+        ->with('concession', $concession);
+    }
 
     /**
      * Guarda una Concession nueva en la base de datos.
@@ -57,18 +76,9 @@ class ConcessionController extends Controller
      */
     public function store(Request $request)
     {
-              $data = $request->all();
-        Concession::create([
-        'name' => $data['name'],
-        'model' => $data['model'],
-        'description' => $data['description'],
-        'status' => $data['status'],
-        'work_purchase_order' => $data['work_purchase_order'],
-        'riskrelease_id' => $data['riskrelease_id'],
-        'partnumber_id' => $data['partnumber_id'],
-        'customer_id' => $data['customer_id'],
-    ]);
-    return \Redirect::to('concessions'); 
+       
+        Concession::create($request->all());
+        return \Redirect::to('concessions'); 
         
     }
 
@@ -99,11 +109,13 @@ class ConcessionController extends Controller
         
     ini_set('memory_limit', '512M');
         ini_set('max_execution_time', 300);
-        return Concession::where('partnumber_id','=', $id)
+        $concessions =  Concession::where('partnumber_id','=', $id)
         ->with('riskrelease')
         ->with('customer')
         ->with('partnumber')
         ->get();
+       return \View::make('concessions.partnumber')
+        ->with('concessions', $concessions);
             
     }
 
@@ -117,40 +129,10 @@ class ConcessionController extends Controller
      * @return \Illuminate\Http\Response La Concession en objeto JSON.
      */
     public function update(Request $request, $id)
-    {
-        if (!is_array($request->all())) {
-            return ['error' => 'request must be an array'];
-        }
-        
-                //Reglas de Validacion
-        $rules = [
-            'model'    => 'required',
-            'description' => 'required',
-            'status'    => 'required',
-            'quantity'  => 'required',
-            'riskrelease_id'    => 'required|exist:riskreleases,id',
-            'partnumber_id' => 'required|exist:partnumbers,id',
-            'customer_id'   => 'required|exist:customers,id'
-        ];
-        
-        try {
-        //Se ejecuta el validador
-        $validator = \Validator::make($request->all(), $rules);
-        if($validator->fails()){
-            return [
-                'updated' => false,
-                'errors' => $validator->errors()->all()
-            ];
-        }
-        
+    {    
         $concession = Concession::findOrFail($id);
         $concession->update($request->all());
-        return ['updated' => true];
-            
-            }catch (Exception $e) {
-            \Log::info('Error actualizando la Concession especificada: '.$e);
-            return \Response::json(['updated' => false], 500);
-        }
+        return \Redirect::to('concessions'); 
     }
 
     /**
@@ -162,29 +144,8 @@ class ConcessionController extends Controller
      */
     public function destroy(Request $request, $id)
     {
-        //Reglas de Validacion
-        $rules = [
-            'id'  => 'required|exist:concessions,id'
-        ];
-        
-        try {
-        //Se ejecuta el validador
-        $validator = \Validator::make($request->all(), $rules);
-        if($validator->fails()){
-            return [
-                'deleted' => false,
-                'errors' => $validator->errors()->all()
-            ];
-        }
-        
         Concession::destroy($id);
-        return ['deleted' => true];
-            
-            }catch (Exception $e) {
-            \Log::info('Error tratando de eliminar la Concession especificada: '.$e);
-            return \Response::json(['deleted' => false], 500);
-        }
+        return \Redirect::to('concessions'); 
     }
-
 
 }

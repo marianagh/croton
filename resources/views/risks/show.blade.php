@@ -16,7 +16,7 @@
 
                             <div class="col-md-6">
                                 <p type="text" class="form-control-static" name="name" >
-                               {{ $customer->name }}
+                               {{ $riskrelease->description }}
                                 </p>     
                             </div>
                         </div>

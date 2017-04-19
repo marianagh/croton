@@ -11,7 +11,7 @@ use Illuminate\Database\Eloquent\Model;
 
 class Concession extends Model
 {
-    protected $fillable = array('name', 'model', 'description', 
+    protected $fillable = array('model', 'description', 
     	'status', 'quantity', 'work_purchase_order', 'riskrelease_id',
     	'partnumber_id', 'customer_id');
     public $timestamps = false;

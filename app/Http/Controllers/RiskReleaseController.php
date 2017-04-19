@@ -91,7 +91,7 @@ class RiskReleaseController extends Controller
     public function edit($id)
     {
        $riskrelease = RiskRelease::findOrFail($id);
-        return \View::make('risks.show')->with('riskrelease', $riskrelease);
+        return \View::make('risks.edit')->with('riskrelease', $riskrelease);
     }
     
 
