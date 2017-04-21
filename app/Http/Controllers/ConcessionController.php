@@ -38,7 +38,7 @@ class ConcessionController extends Controller
      */
     public function create()
     { 
-        $riskreleases = RiskRelease::pluck('id');
+        $riskreleases = RiskRelease::pluck('id', 'id');
         $partnumbers = PartNumber::pluck('name', 'id');
         $customers = Customer::pluck('name', 'id');
 
@@ -94,7 +94,7 @@ class ConcessionController extends Controller
        ini_set('memory_limit', '256M');
        ini_set('max_execution_time', 300);
        $concession = Concession::findOrFail($id);
-       return \View::make('concessions.index')->with('concession',$concession);
+       return \View::make('concessions.show')->with('concession',$concession);
     }
 
     /**

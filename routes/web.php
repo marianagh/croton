@@ -21,12 +21,16 @@ Auth::routes();
 
 Route::get('/logout', array(
         'as' => 'logout',
-        'uses' => 'WelcomeController@getSignOut'
+        'uses' => 'Auth\LoginController@logout'
     ));
+
+/* Home Routes */
 
 Route::resource('home', 'HomeController');
 
 Route::get('/', 'HomeController@index');
+
+/* Controller Routes */
 
 Route::resource('users', 'UserController');
 

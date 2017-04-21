@@ -24,6 +24,17 @@
                                 @endif
                             </div>
                         </div>
+                         <div class="form-group{{ $errors->has('model') ? ' has-error' : '' }}">
+                            {{ Form::label('model', 'Modelo', ['class' => 'col-md-4 control-label']) }}
+                            <div class="col-md-6">
+                                 {{Form::text('model', null, ['class' => 'form-control'])}}
+                                @if ($errors->has('model'))
+                                    <span class="help-block">
+                                        <strong>{{ $errors->first('name') }}</strong>
+                                    </span>
+                                @endif
+                            </div>
+                        </div>
                         <div class="form-group{{ $errors->has('customer_id') ? ' has-error' : '' }}">
                             {{ Form::label('customer_id', 'Cliente', ['class' => 'col-md-4 control-label']) }}
                             <div class="col-md-6">

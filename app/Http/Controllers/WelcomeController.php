@@ -1,5 +1,6 @@
 <?php namespace App\Http\Controllers;
 
+
 class WelcomeController extends Controller {
 
 	/*
@@ -35,8 +36,8 @@ class WelcomeController extends Controller {
 
 	public function getSignOut() {
 
-    Auth::logout();
-    return Redirect::route('home');
+    Session::flush(); 
+    return Redirect::route('/');
 
 	}
 
