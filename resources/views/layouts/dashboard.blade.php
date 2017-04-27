@@ -78,6 +78,7 @@
             <!-- /.navbar-static-side -->
         </nav>
 
+       
         <div id="page-wrapper">
 			 <div class="row">
                 <div class="col-lg-12">
@@ -85,10 +86,13 @@
                 </div>
                 <!-- /.col-lg-12 -->
            </div>
+           
 			<div class="row">  
 				@yield('section')
-
+            
             </div>
+            
+            
             <!-- /#page-wrapper -->
         </div>
     </div>

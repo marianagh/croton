@@ -20,8 +20,8 @@
             <td>{{ $value->model }}</td>
             <td>{{ $value->status }}</td>
             <td>
-                <a class="btn btn-small btn-success" href="{{ URL::to('concessions/' . $value->id) }}">Show</a>
-                <a class="btn btn-small btn-info" href="{{ URL::to('concessions/' . $value->id . '/edit') }}">Edit</a>
+                <a class="btn btn-small btn-success" href="{{ URL::to('concessions/' . $value->id) }}"><i class="fa fa-search"></i></a>
+                <a class="btn btn-small btn-info" href="{{ URL::to('concessions/' . $value->id . '/edit') }}"><i class="fa fa-pencil-square-o"></i></a>
                 {{ Form::open(array('url' => 'concessions/' . $value['id'], 'class' => 'btn')) }}
                 {{ Form::hidden('_method', 'DELETE') }}
                 {{ Form::submit('Delete', array('class' => 'btn btn-small btn-danger')) }}

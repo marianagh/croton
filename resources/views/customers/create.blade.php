@@ -1,5 +1,5 @@
 @extends('layouts.dashboard')
-@section('page_heading','Agregar Proveedor')
+@section('page_heading','Agregar Cliente')
 @section('section')
   
 <div class="container">

@@ -22,7 +22,7 @@
             <td>{{ $value->init_date }}</td>
             <td>{{ $value->end_date }}</td>
             <td>
-                <a class="btn btn-small btn-info" href="{{ URL::to('risks/' . $value->id . '/edit') }}">Edit</a>
+                <a class="btn btn-small btn-info" href="{{ URL::to('risks/' . $value->id . '/edit') }}"><i class="fa fa-pencil-square-o"></i></a>
                 {{ Form::open(array('url' => 'risks/' . $value->id, 'class' => 'btn')) }}
                 {{ Form::hidden('_method', 'DELETE') }}
                 {{ Form::submit('Delete', array('class' => 'btn btn-small btn-danger')) }}

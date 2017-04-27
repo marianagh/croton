@@ -1,0 +1,82 @@
+
+
+#firstRow {
+	position: absolute;
+	width: 1400px;
+	top: 260px;
+	left: 270px;
+	color: #333;
+}
+
+#firstRow li {
+	float: left;
+	height: 85px;
+	width: 420px;
+	padding-left: 170px;
+	padding-top: 15px;
+}
+
+.concessionsButton{
+    position: absolute;
+    top: 152px;
+    left:178px;
+}
+
+.risksButton{
+    position: absolute;
+    top: 87px;
+    right:245px;
+}
+
+.partsButton{
+    position: absolute;
+    top: 87px;
+    right:645px;
+}
+
+#secondRow {
+	position: absolute;
+	width: 1400px;
+	top: 460px;
+	left: 270px;
+	color: #333;
+}
+
+#secondRow li {
+	float: left;
+	height: 85px;
+	width: 420px;
+	padding-left: 180px;
+	padding-top: 15px;
+}
+
+.usersButton{
+    position: absolute;
+    top: 87px;
+    right:255px;
+}
+
+.suppliersButton{
+    position: absolute;
+    top: 87px;
+    right:650px;
+}
+
+.customersButton{
+    position: absolute;
+    top: 90px;
+    left:180px;
+}
+
+/* ----------- ESTILOS AUXILIARES --------------- */
+
+.listReset {
+   list-style-type: none;
+   margin: 0;
+   padding: 0;
+}
+
+.mainIcons{
+   color: black;
+   text-decoration: none;
+}
